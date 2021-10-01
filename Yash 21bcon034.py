@@ -1,1 +1,16 @@
-print<"Hello hacktobers"<"It's Yash Khandelwal here"<"Btech cse 1st year"<"Can connect at insta @yash6778">
+#include<iostream.h>
+#include<conio.h>
+void main()
+{
+clrscr();
+int a, b, c;
+cout<<"enter the name of the stock a=";
+cin>>a;
+cout<<"enter the buy quantity of stock, b=";
+cin>>b;
+c=(a*b+50);
+cout<<"the total buy amount is c=";
+getch();
+}
+  
+
