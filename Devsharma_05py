@@ -1,0 +1,68 @@
+#This is A Stone-Paper-Scissors Game Made By DEV SHARMA
+print("------> Welcome to Stone Paper Scissors game <------")
+print()
+import random
+n =0
+while (n ==0):
+    userpoint = computerpoint =0
+    chance = int(input("Enter the Number of Chance Of Game You Want to Play :- "))
+    for i in range(0,chance,1):
+        userinput = int(input("Enter The Number here \n1.STONE\n2.PAPER\n3.SCISSORS :- "))
+        l = ["Stone","Paper","Scissors"]
+        computerinput = (random.choice(l))
+        print("----------------------------------")
+        if userinput == 1:
+            userinput1 = "Stone"
+        elif userinput == 2:
+            userinput1 = "Paper"
+        else:
+            userinput1 = "Scissors"
+        print("User :- ",userinput1)
+        print("Computer :- ",computerinput)
+        if userinput1 == computerinput:
+            print("--> Tie")
+            computerpoint +=1
+            userpoint += 1
+        elif computerinput == "Stone":
+            if userinput ==2:
+                userpoint +=1
+                print("--> User Won")
+            elif userinput ==3:
+                computerpoint +=1
+                print("--> Computer Won")
+        elif computerinput == "Paper":
+            if userinput ==3:
+                userpoint +=1
+                print("--> User Won")
+            elif userinput ==1:
+                computerpoint +=1
+                print("--> Computer Won")
+        elif computerinput == "Scissors":
+            if userinput ==1:
+                userpoint +=1
+                print("--> User Won")
+            elif userinput ==2:
+                computerpoint +=1
+                print("--> Computer Won")
+        print("----------------------------------")
+        print("User Point :- ",userpoint)
+        print("Computer Point :- ",computerpoint)
+        print("----------------------------------")
+    print("_____________________________")
+    if computerpoint>userpoint:
+        print("COMPUTER WON ")
+    elif userpoint > computerpoint:
+        print("USER WON")
+    else:
+        print("Tie")
+    print("_____________________________")
+    print("??????????????????????????????")
+    choise = input("Do you want to play more (y/n) :")
+    print("??????????????????????????????")
+    print()
+    if choise == "y" or choise =="Y":
+        print("New Game Begins --> ")
+        continue
+    else:
+        print("Thanks For Playing Stone-Paper-Scissors Game Made By DEV SHARMA ")
+        break
