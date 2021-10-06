@@ -1,9 +1,5 @@
-//*****************************************************************RANGE OF PRIME NUMBERS********************************************************
 import java.util.*;
 import java.io.*;
-
-//MAIN PROGRAM
-
 class Primeno
 
 {
