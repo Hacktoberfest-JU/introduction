@@ -1,0 +1,22 @@
+import smtplib
+from email.mine.text import MIMEText
+from email.mine.multipart import MIMEMultipart
+
+email = "devsharmalaptop@gmail.com"
+password = "password"
+sent_to_email = "nextlevel1234nextlevel@gmail.com"
+subject = "this is the subject"
+message = " this is my message"
+
+msg = MINEMultipart()
+msg["From"] = email
+msg["To"] = send_to_email
+msg["subject"] = subject
+
+msg.attach(MIMEText(message, " plain"))
+
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+server.login(email, password)
+text = msg.as_string()
+server.sendmail(email, send_to_email, text)
