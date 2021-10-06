@@ -1,0 +1,13 @@
+#include<iostream.h>
+#include<conio.h>
+void main()
+{
+clrscr();
+int a,b;
+cout<<"enter the name of the product";
+cin>>a;
+cout<<"enter the quantity";
+cin>>b;
+cout<<"success";
+getch();
+}
