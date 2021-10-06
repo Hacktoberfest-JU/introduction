@@ -1,0 +1,20 @@
+#HOW TO MERGE TO DATAFRAMES
+#IMPORT PACKAGE PANDAS
+import pandas as pd
+#USING DICTIONARY
+s2={"Name":["Akriti","Bhanu","Chitra"],"Age":[13,14,15],"Competitions":[5,4,1]}
+#INSERTING VALUES IN DATAFRAME
+s=pd.DataFrame(s2,index=[1,2,3])
+print('STUDENT')
+print(s)
+print('----*----*----*----*----*----*----')
+print('EMPLOYEE')
+#CREATING NESTED DICTIONARY
+d={"Working_Days":{"Priya":123,"Riya":156,"Rohit":234},"Assignments_signed":{"Priya":55,"Riya":79,"Rohit":68}}
+d1=pd.DataFrame(d)
+print(d1)
+d2=[s,d1]
+print("----*----*----*----*----*----*----")
+print('COMBINED DATAFRAME')
+#COMBINING DATAFRAMES
+print(pd.concat(d2))
