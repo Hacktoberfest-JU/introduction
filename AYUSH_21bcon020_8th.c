@@ -1,6 +1,4 @@
-//THIS CODE IS WRITTEN BY  AYUSH SINGODIA
 #include<stdio.h>
-
 int main()
 {
     char operator;
