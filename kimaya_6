@@ -1,0 +1,16 @@
+#program to plot a scatter chart taking random distributions on x and y axes with varying colors
+#IMPORTING NUMPY
+import numpy as np
+#IMPORTING MATPLOTLIB
+import matplotlib.pyplot as plt
+#USING RANDOM FUNCTION
+x=np.random.randint(1,100,size=(250,))
+y=np.random.randint(1,100,size=(250,))
+#USING SIZE AND COLOR ATTRIBUTES
+size=range(0,250)
+color=range(0,250)
+plt.scatter(x,y,c=color)
+#ADDING LABELS
+plt.xlabel('Values of X-axis')
+plt.ylabel('Values of Y-axis')
+plt.show()
