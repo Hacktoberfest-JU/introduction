@@ -1,0 +1,24 @@
+#program to take out the minimum mean out of the created dataframe
+#IMPORTING PACKAGE PANDAS
+import pandas as pd
+#CREATING DATAFRAME USING DICTIONARY
+Students_In_Exibition = {"VI": {2016: 67, 2017: 89, 2018: 90},
+                         "VII": {2016: 77, 2017: 99, 2018: 80},
+                         "VIII": {2016: 57, 2017: 49, 2018: 70}}
+Students_Participated_In_Exibition = pd.DataFrame(Students_In_Exibition)
+Students_Participated_In_Exibition.index.name='Year'
+print('Students_Participated_In_Exibition')
+#PRINTING NUMBER OF STUDENTS PARTICIPATED
+print(Students_Participated_In_Exibition)
+print('\n')
+print('Total_Students_Participated_In_Exibition')
+#PRINTING TOTAL STUDENTS PARTICIPATED IN EACH YEAR
+print(Students_Participated_In_Exibition.sum(axis=1))
+print('\n')
+Mean_Of_Students_Participated_In_Exibition=Students_Participated_In_Exibition.mean(axis=1)
+print('Mean_Of_Students_Participated_In_Exibition')
+#PRINTING MEAN OF THE TOTAL STUDENTS PARTICIPATED
+print(Mean_Of_Students_Participated_In_Exibition)
+print('\n')
+print('Minimum_Mean_Of_Students_Participated_In_Exibition')
+print(Mean_Of_Students_Participated_In_Exibition.idxmin())
