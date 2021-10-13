@@ -1,0 +1,6 @@
+#program to display the days of week using series
+#CREATING A SERIES USING DICTIONARY
+import pandas as pd
+s= {1: 'Sunday' ,2: 'Monday', 3: 'Tuesday', 4: 'Wednesday', 5: 'Thursday', 6: 'Friday', 7: 'Saturday'}
+s1 = pd.Series(s,index=[1,2,3,4,5,6,7])
+print(s1)
