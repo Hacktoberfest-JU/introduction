@@ -1,0 +1,12 @@
+Height = int(input('Enter your height '))
+Weight = int(input('Enter your weight'))
+BMI= Weight/(Height**2)
+if BMI<16:
+ RESULT = "SEVERELY UNDERWEIGHT"
+elif 16< BMI <18.5:
+ RESULT = "UNDERWEIGHT"
+elif 18.5< BMI <25:
+ RESULT = "HEALTHY"
+else:
+ RESULT= "OVERWEIGHT"
+print("YOU ARE", RESULT)
