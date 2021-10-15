@@ -1,0 +1,19 @@
+#a program to subtract the value of the created dataframe from it and printing it
+#IMPORTING PACKAGE PANDAS
+import pandas as pd
+Sales= { 'IBM': {'Dept1':4560,'Dept2': 7890,'Dept3':10000},
+         'Infosys': {'Dept1':5000,'Dept2': 8590,'Dept3':9000},
+         'Tata': {'Dept1':6000,'Dept2': 2590,'Dept3':3000}
+         }
+df=pd.DataFrame(Sales)
+print('SALES')
+print(df)
+#CREATING SPACES BETWEEN DATAFRAMES
+print('\n\n')
+print("MEAN")
+#PERFORMING MEAN
+print(df.mean(axis=1))
+print('\n\n')
+#PRINTING SUBTRACTED DATAFRAME
+print("DATAFRAME AFTER SUBTRACTING MEAN VALUE")
+print(df.sub(df.mean(axis=1),axis=0))
