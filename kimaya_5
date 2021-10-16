@@ -1,0 +1,9 @@
+#program to create a pie chart of marks scored by a student and also show the index
+import matplotlib.pyplot as plt
+subject = ['Maths','Science','English']
+marks= [40,79,54]
+patches,text= plt.pie(marks,labels=subject,colors=['#151B3D','#F0F71D','#4EBF24'],shadow=True)
+#USING LEGEND
+plt.legend(patches,subject,loc="best")
+plt.title("Marks List")
+plt.show()

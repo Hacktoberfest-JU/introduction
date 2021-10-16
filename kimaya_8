@@ -1,0 +1,11 @@
+#program to create a dataframe using dictionary and customizing the index
+#IMPORT PACKAGE PANDAS
+import pandas as pd
+#CREATING A DICTIONARY
+s= {'item_category': ['Mobile Phones','Television','Air Conditioner','Refrigerator'],
+    'item_company': ['apple','sony','samsung','LG'],
+    'expenditure': [45000,30000,50000,25000]}
+#CREATING DATAFRAME
+df = pd.DataFrame(s,index=[1,2,3,4])
+#PRINTING DATAFRAME
+print(df)

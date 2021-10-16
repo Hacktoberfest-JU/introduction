@@ -1,0 +1,95 @@
+#This is a virtual assistant program which is simliar to google assistant.The virtual assistant name is Jarvis.
+
+#Requirenment to make it run:
+
+#1. Install latest version python
+#2. Install speech recognition (open cmd and type "pip install SpeechRecognition")
+#3. Install pyttsx3 (open cmd and type "pip install pyttsx3")
+#4. Install wikipedia (open cmd and type "pip install wikipedia")
+
+#Things Jarvis can do for you.
+
+#1. Wish you
+#2. Tell you current time (use command "Jarvis what's the time")
+#3. Search something on wikipedia (use command "'what you want to know about'wikipedia"
+#4. Open youtube.com (use command "Jarvis open youtue") google.com (use command ("Jarivs open google") vscode (use command ("Jarvis open vs code") (first add your vscode location in code path in source code)
+#5. Make him repeat what you said (use command "Jarvis repeat 'what you want him to repeat'")
+                                                                                                           
+import speech_recognition as sr
+import pyttsx3
+import datetime
+import wikipedia
+import webbrowser
+import os
+
+engine = pyttsx3.init('sapi5')
+voices =engine.getProperty('voices')
+#print(voices)
+engine.setProperty('voices',voices[0].id)
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+def wishme():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good morning!")
+
+    elif hour>=12 and hour<18:
+        speak("Good Afternoon!")
+
+    else:
+        speak("Good evening!")
+
+    speak("Hey i am Jarvis,How can i help you?")
+
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listning...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='en-in')
+        print(f"User said: {query}\n")
+
+    except Exception as e:
+        #print(e)
+
+        print("Could you please repeat...")
+        return "None"
+    return query
+
+if __name__ == "__main__":
+    wishme()
+while True:
+    query = takeCommand().lower()
+
+    if 'wikipedia' in query:
+        speak('Searching Wkikipedia')
+        query = query.replace("wikipedia", "")
+        result = wikipedia.summary(query, sentences=2)
+        speak("According to wikipedia")
+        print(result)
+        speak(result)
+
+    elif 'open youtube' in query:
+        webbrowser.open("youtube.com")
+
+    elif 'open google' in query:
+        webbrowser.open("google.com")
+
+    elif 'the time' in query:
+        strTime = datetime.datetime.now().strftime("%H:%M")
+        speak(f"Sir, the time is{strTime}")
+
+    elif 'open vs code' in query:
+        codepath = "C:\\Users\\Harshvardhan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+        os.startfile(codepath)
+    
+    elif 'repeat' in query:
+        speak(query)

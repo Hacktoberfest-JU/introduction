@@ -1,0 +1,18 @@
+#program to print duplicate rows out of dataframe created
+#IMPORTING PANDAS LIBRARY
+import pandas as pd
+#CREATING A DATAFRAME THROUGH DICTIONARY
+Marks_Of_IP= {'Name': ["Ajay","Rohan","Sohan","Ajay","Priya","Riya","Mohan","Priya","Reeta","Ram"],
+      'MarksIP':[89,78,99,89,90,87,69,90,68,56]}
+IP_Marks = pd.DataFrame(Marks_Of_IP,index=['01','02','03','04','05','06','07','08','09','10'])
+#EXTRACTING DUPLICATE ROWS
+duplicateRow = IP_Marks[IP_Marks.duplicated(keep=False)]
+#GIVING INDEX NAMES
+IP_Marks.index.name= 'Roll No.'
+duplicateRow.index.name= 'Roll No.'
+print("IP_Marks")
+#PRINTING DATAFRAME
+print(IP_Marks)
+print("Duplicate Rows in the Dataframe")
+#PRINTING DUPLICATE ROWS IN THE DATAFRAME
+print(duplicateRow)

@@ -1,0 +1,12 @@
+#for replacing negative values by zero
+import pandas as pd
+d={1:[24,-56,-9],2:[64,-87,56],3:[12,-43,-89]}
+d1=pd.DataFrame(d)
+print("dataframe with the negative values")
+print(d1)
+print()
+print("----*----*----*----*----")
+print()
+d1[d1<0]=0
+print('dataframe after replacing the negative values by 0')
+print(d1)
