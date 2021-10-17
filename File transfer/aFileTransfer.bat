@@ -101,6 +101,6 @@ msg %USERNAME% ERROR ABORTING
 exit
 
 :changingDirectory
-set /p anyDirectory="Enter the folder location to be shared(Like C:\Users\India\Desktop, PLS COPY FILE PATH TO AVOID ERROR):"
+set /p anyDirectory="Enter the folder location to be shared(Like C:\Users\India\Desktop PLS COPY FILE PATH TO AVOID ERROR):"
 cd /D "%anyDirectory%"
 goto rest
