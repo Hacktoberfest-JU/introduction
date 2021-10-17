@@ -92,7 +92,7 @@ netsh wlan stop hostednetwork
 Msg %USERNAME% Hotspot Stopped
 
 :SameDirectory
-set /p anyDirectory="Enter the  folder location:"
+set /p anyDirectory="Enter the  folder location (like C:\Users\India\Desktop PLS COPY FOLDER PATH )  :"
 cd /D "%anyDirectory%"
 goto rest
 
