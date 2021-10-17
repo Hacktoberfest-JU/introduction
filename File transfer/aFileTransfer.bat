@@ -56,7 +56,13 @@ cls
 @REM Stuck in changing directory for more than 1 day to change drive use cd /D "then enter path"
 
 
+
 :rest
+msg %USERNAME% PLEASE DISCONNECT from any wifi it might be later confusing for you to enter the ip address
+echo.
+echo.
+echo.
+pause
 
  set /P portNumber="Enter the port number for webserver (like 8000):"
 
@@ -91,13 +97,10 @@ SET /P WantToStopHotspot="Press ENTER to STOP hotspot: "
 netsh wlan stop hostednetwork
 Msg %USERNAME% Hotspot Stopped
 
-:SameDirectory
-set /p anyDirectory="Enter the  folder location (like C:\Users\India\Desktop PLS COPY FOLDER PATH )  :"
-cd /D "%anyDirectory%"
-goto rest
-
+msg %USERNAME% ERROR ABORTING
+exit
 
 :changingDirectory
-set /p anyDirectory="Enter the folder location to be shared:"
+set /p anyDirectory="Enter the folder location to be shared(Like C:\Users\India\Desktop, PLS COPY FILE PATH TO AVOID ERROR):"
 cd /D "%anyDirectory%"
 goto rest
