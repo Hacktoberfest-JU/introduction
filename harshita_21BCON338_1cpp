@@ -1,0 +1,13 @@
+#include<constream.h>
+void main()
+{
+int i,fact=1,n;
+cout<<"enter a number";
+cin>>n;
+for(i=1;i<=n;i++)
+{
+fact=fact*i;
+}
+cout<<"factorial is "<<fact;
+getch();
+}
