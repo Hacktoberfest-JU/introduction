@@ -1,2 +1,2 @@
 # introduction
-Introduction repository where you will be practicing basic Git skills
+Introduction repository where you will be practising basic Git skills
