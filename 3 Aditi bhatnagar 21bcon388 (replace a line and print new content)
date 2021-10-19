@@ -1,0 +1,26 @@
+print("Enter File's Name: ", end="")
+fname = input()
+
+fhandle = open(fname, "r")
+lines = fhandle.readlines()
+fhandle.close()
+
+print("Enter line number to replace it: ", end="")
+lno = int(input())
+print("Enter new content for line no.", lno, "\b: ", end="")
+nline = input()
+
+print("\n------Old Content-------")
+content = ""
+content = content.join(lines)
+print(content)
+
+lines[lno] = nline
+fhandle = open(fname, "w")
+fhandle.writelines(lines)
+fhandle.close()
+
+print("\n-----New Content--------")
+content = ""
+content = content.join(lines)
+print(content)
