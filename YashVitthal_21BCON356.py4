@@ -1,0 +1,9 @@
+def g(a,b):
+     if(b==0):
+          return a
+     else:
+          return g(b,a%b)
+n1=int(input("Enter 1st number:"))
+n2=int(input("Enter 2nd number:"))
+d=g(n1,n2)
+print("GREATEST COMMON DIVISOR OF",n1,"and",n2,"is:",d)
