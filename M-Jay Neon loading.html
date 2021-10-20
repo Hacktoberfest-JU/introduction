@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <Style>
+        html,
+        body {
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #0d1019;
+            /* Old browsers */
+            background: -moz-linear-gradient(-45deg, #0d1019 0%, #161b29 100%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(-45deg, #0d1019 0%, #161b29 100%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(135deg, #0d1019 0%, #161b29 100%);
+            /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0d1019', endColorstr='#161b29', GradientType=1);
+            /* IE6-9 fallback on horizontal gradient */
+        }
+
+        .container {
+            width: 20vw;
+            height: 20vw;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Compressing bars style */
+
+        .bars-common {
+            height: 4vw;
+            max-height: 100%;
+            width: 1vw;
+            margin: auto;
+            position: absolute;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .bar-one {
+            left: 0;
+            right: 4vw;
+            top: 0;
+            bottom: 0;
+            box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+        }
+
+        .bar-two {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+        }
+
+        .bar-three {
+            left: 4vw;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+        }
+
+        /* Rotating squares style */
+
+        .squares-common {
+            height: 8vw;
+            max-height: 100%;
+            width: 8vw;
+            margin: auto;
+            position: absolute;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-radius: 0%;
+        }
+
+        .square-one {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+        }
+
+        .square-two {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+        }
+
+        /* Animation */
+        /* Compressing bars animation */
+
+        .bar-one {
+            animation: barOne 1s .33s ease infinite;
+            -moz-animation: barOne 1s .33s ease infinite;
+            /* Firefox */
+            -webkit-animation: barOne 1s .33s ease infinite;
+            /* Safari and Chrome */
+            -o-animation: barOne 1s .33s ease infinite;
+            /* Opera */
+        }
+
+        @keyframes barOne {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+            }
+
+            50% {
+                height: 2.5vw;
+                box-shadow: 0 0 0 .1vw magenta, 0 0 1vw 0 magenta, inset 0 0 .5vw 0 magenta;
+            }
+        }
+
+        .bar-two {
+            animation: barTwo 1s .66s ease infinite;
+            -moz-animation: barTwo 1s .66s ease infinite;
+            /* Firefox */
+            -webkit-animation: barTwo 1s .66s ease infinite;
+            /* Safari and Chrome */
+            -o-animation: barTwo 1s .66s ease infinite;
+            /* Opera */
+        }
+
+        @keyframes barTwo {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+            }
+
+            50% {
+                height: 2.5vw;
+                box-shadow: 0 0 0 .1vw magenta, 0 0 1vw 0 magenta, inset 0 0 .5vw 0 magenta;
+            }
+        }
+
+        .bar-three {
+            animation: barThree 1s .99s ease infinite;
+            -moz-animation: barThree 1s .99s ease infinite;
+            /* Firefox */
+            -webkit-animation: barThree 1s .99s ease infinite;
+            /* Safari and Chrome */
+            -o-animation: barThree 1s .99s ease infinite;
+            /* Opera */
+        }
+
+        @keyframes barThree {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 .1vw cyan, 0 0 1vw 0 cyan, inset 0 0 .5vw 0 cyan;
+            }
+
+            50% {
+                height: 2.5vw;
+                box-shadow: 0 0 0 .1vw magenta, 0 0 1vw 0 magenta, inset 0 0 .5vw 0 magenta;
+            }
+        }
+
+        /* Rotating squares animation */
+
+        .square-one {
+            animation: squareOne 4s .99s ease infinite;
+            -moz-animation: squareOne 4s .99s ease infinite;
+            /* Firefox */
+            -webkit-animation: squareOne 4s .99s ease infinite;
+            /* Safari and Chrome */
+            -o-animation: squareOne 4s .99s ease infinite;
+            /* Opera */
+        }
+
+        @keyframes squareOne {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-180deg);
+            }
+        }
+
+        .square-two {
+            animation: squareTwo 4s .99s ease infinite;
+            -moz-animation: squareTwo 4s .99s ease infinite;
+            /* Firefox */
+            -webkit-animation: squareTwo 4s .99s ease infinite;
+            /* Safari and Chrome */
+            -o-animation: squareTwo 4s .99s ease infinite;
+            /* Opera */
+        }
+
+        @keyframes squareTwo {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(180deg);
+            }
+        }
+    </Style>
+</head>
+
+<body>
+    <!-- Compressing bars component -->
+    <div class="bars-common bar-one"></div>
+    <div class="bars-common bar-two"></div>
+    <div class="bars-common bar-three"></div>
+
+    <!-- Rotating squares component -->
+    <div class="squares-common square-one"></div>
+    <div class="squares-common square-two"></div>
+</body>
+
+</html>
