@@ -1,0 +1,6 @@
+#include<constream.h>
+void main()
+{
+cout<<"AYUSH gupta";
+getch();
+}
