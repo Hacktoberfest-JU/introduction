@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: arial;
+        }
+
+        .progress_container {
+            position: relative;
+            height: 15px;
+            background: #fff1;
+            box-shadow: 0 0 1px #fff8, 0 0 8px #000c inset;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+
+        .progress_bar {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background-color: #fff;
+            border-radius: inherit;
+            box-shadow: 0 0 6px red, 0 0 16px red, 0 0 26px red, 0 0 36px red, 0 0 46px red;
+            transition: 0.3s linear;
+        }
+
+
+        .progress_text {
+            position: absolute;
+            color: #fff;
+            top: -150%;
+            left: 50%;
+            font-size: 25px;
+            transform: translate(-50%, -50%);
+            text-shadow: 0 0 5px red, 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress_container">
+        <div class="progress_bar"></div>
+        <div class="progress_text">0%</div>
+    </div>
+    <script>window.addEventListener('load', () => {
+            let progress_bar = document.querySelector('.progress_bar'),
+                progress_text = document.querySelector('.progress_text'),
+                speed = 50,//milliseconds
+                rang = 0;
+
+            if (progress_bar && progress_text) {
+                let intervalID = setInterval(() => {
+                    rang++;
+                    progress_bar.style.width = rang + '%';
+                    progress_text.innerText = rang + '%';
+
+                    if (rang > 100) {
+                        clearInterval(intervalID);
+                        progress_text.innerText = 'Loading Completed';
+                    }
+
+                }, speed);
+            }
+        });</script>
+</body>
+
+</html>
