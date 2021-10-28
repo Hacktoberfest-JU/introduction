@@ -1,0 +1,29 @@
+#include<constream.h>
+class bunk
+{
+private:
+float p,r,t,si,amount;
+public:
+void read()
+{
+cout<<"enter principle amount";
+cin>>p;
+cout<<"enter thw rate";
+cin>>r;
+cout<<"enter the number of years";
+cin>>t;
+si=(p*r*t)/100;
+amount=si+p;
+}
+show()
+{cout<<"\n interest is "<<si;
+cout<<"\n total amount "<<amount;
+}
+};
+
+void main()
+{
+bank b;
+b.read();
+b.show();
+}
