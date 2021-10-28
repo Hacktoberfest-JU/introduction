@@ -1,39 +1,26 @@
-# include <iostream>
-# include <conio.h>
+#include<iostream>
+#include<conio>
+#include<cmath>
+#include<cstdlib>
+#include<ctime>
 using namespace std;
-
-int main() {
-    char op;
-    float num1, num2;
-
-    cout << "Enter operator: +, -, *, /: ";
-    cin >> op;
-
-    cout << "Enter two operands: ";
-    cin >> num1 >> num2;
-
-    switch(op) {
-        case '+':
-            cout << num1 << " + " << num2 << " = " << num1 + num2;
-            break;
-
-        case '-':
-            cout << num1 << " - " << num2 << " = " << num1 - num2;
-            break;
-
-        case '*':
-            cout << num1 << " * " << num2 << " = " << num1 * num2;
-            break;
-
-        case '/':
-            cout << num1 << " / " << num2 << " = " << num1 / num2;
-            break;
-
-        default:
-            // If the operator is other than +, -, * or /, error message is shown
-            cout << "Error! operator is not correct";
-            break;
-    }
-
-    return 0;
-}
+int main (){
+  srand(time(0));
+  const int size=60;
+  cout << "Enter a letter to begin \n ";
+  char x; cin>> x;
+  int position = size /2;
+  while (true) {
+    cout << "|START|" ;
+    for (int i=0; i<size;i++) {
+      if (i == position) 
+        cout << x;
+      else cout << " ";}
+    cout << "|FINISH|" << endl;
+    int move= rand()%3 - 1;
+    position = position + move; 
+    if (position <1) {cout << "You could not finish the race!" <<endl; break;}
+    if (position >size-1) {cout << "Yay! You finished the race" << endl; break;}
+    for(int sleep=0; sleep< 1000000 ; ++ sleep);
+  }   
+  return 0; 
