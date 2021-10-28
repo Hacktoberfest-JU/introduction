@@ -2,5 +2,23 @@
 void main()
 {
 cout<<"AYUSH gupta";
+=======
+int a=5,b=10,temp;
+cout<<"before swapping"<<endl;
+cout<<"a="<<a<<"b="<<b<<endl;
+temp=a;
+a=b;
+b=temp;
+cout<<"/nAfter swapping"<<endl;
+cout<<"a= "<<a<<"b= "<<b<<endl;
+=======
+int i,fact=1,num;
+cout<<"enter a number";
+cin>>num;
+for(i=1;i<num;i++)
+{
+fact=fact*i;
+}
+cout<<"factorial is"<<fact;
 getch();
 }
