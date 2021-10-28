@@ -1,0 +1,25 @@
+'''Write a Python program which checks whether a given string is completely
+numeric or completely alpha or both? If the string contains combination of numeric,
+alpha and special characters then the program should extract each of them separately
+into different lists and print them. (First write a program using Python loop version
+and then convert this into a List Comprehension.)'''
+s = input()
+if s.isnumeric():
+print('Numeric')
+elif s.isalpha():
+print('Alphabetic')
+else:
+print('Combination')
+alpha = []
+numeric = []
+special = []
+for letter in s:
+if letter.isalpha():
+alpha.append(letter)
+elif letter.isnumeric():
+numeric.append(letter)
+else:
+special.append(letter)
+print('Alpha list ', alpha)
+print('Numeric list ', numeric)
+print('Special list ', special)

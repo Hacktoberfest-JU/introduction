@@ -1,0 +1,17 @@
+#a program to take out mean, median and mode from a dataframe
+import pandas as pd
+sales= {'invoiceno.' : [1001,1002,1003,1004],
+    'productname': ['Washing Machine','Laptops','Air Conditioner','Ear Pods'],
+    'quantity': [5,8,8,9],
+    'price': [45000,30000,50000,15000]}
+sales_df= pd.DataFrame(sales)
+print(sales_df)
+#TAKING OUT MEAN
+price_df= pd.DataFrame(sales,columns =['price'])
+print(price_df.mean())
+#TAKING OUT MEDIAN
+invoiceno_df= pd.DataFrame(sales,columns=['invoiceno.'])
+print(invoiceno_df.median(axis=0))
+#TAKING OUT MODE
+quantity_df= pd.DataFrame(sales,columns=['quantity'])
+print(quantity_df.mode(axis=0))

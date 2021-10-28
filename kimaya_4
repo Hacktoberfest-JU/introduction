@@ -1,0 +1,14 @@
+#program to create a line chart in matplotlib indicating subjects and their percentage scored
+#IMPORTING MATPLOTLIB
+import matplotlib.pyplot as plt
+Subject= ['Maths','Chemistry','Physics','Biology','IP']
+Percentage= [70,90,48,89,70]
+#ASSINGNING  THE VALUES OF x AND y AXES.
+plt.plot(Subject,Percentage,color='green',marker='p')
+#GIVING x AND y LABELS
+plt.xlabel('subject')
+plt.ylabel('percentage')
+#GIVING TITLE TO GRAPH
+plt.title('results')
+#SHOWING THE CHART
+plt.show()

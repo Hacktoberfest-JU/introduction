@@ -1,0 +1,1092 @@
+#SOURCE CODE FOR Covid Management
+
+print("****************************************************************************")
+print("*                                                                          *")
+print("*                  Welcome to Covid Management System                      *")
+print("*                                                                          *")
+print("****************************************************************************")
+import datetime
+now = datetime.datetime.now()
+print (now.strftime("Date > %Y-%m-%d                                            Time > %H:%M:%S"))
+curdate = now.strftime("Date > %Y-%m-%d")
+curtime = now.strftime("Time > %H:%M:%S")
+curdate1 = now.strftime("%Y-%m-%d")
+curtime1 = now.strftime("%H:%M:%S")
+
+import mysql.connector
+import getpass
+#import modules
+from num2words import num2words
+from plyer import notification 
+import psutil
+
+#returns a tuple
+battery = psutil.sensors_battery()
+
+plugged = battery.power_plugged
+
+#description of code
+if __name__=="__main__": 
+    if plugged:
+        percent = battery.percent
+        if percent < 100:
+            notification.notify( 
+            #title of notification
+            title = "Plugged In", 
+
+            #message of notification
+            
+            message=f" Battery is charged upto {percent} " , 
+            
+            # displaying time 
+            timeout=2 
+            )
+           
+        elif percent == 100: 
+            notification.notify( 
+            title = "Plugged In", 
+            message=" Please plugged out the charger. Battery is charged" , 
+            timeout=2 
+            )
+           
+
+            
+    else:
+        percent = battery.percent
+        if percent <=10:
+            notification.notify( 
+            title = "Battery ALERT !!", 
+            message="Your battery is running low. You must plug in your PC otherwise you may lose unsaved data" , 
+            timeout=2 
+            )
+        elif percent <=20:
+            notification.notify( 
+            title = "Battery Reminder", 
+            message="Your battery is running low. You must plug in your PC " , 
+            timeout=2 
+            )
+       
+        elif percent <=100:
+            notification.notify( 
+            title = "Battery Reminder", 
+            message=f" Battery is {percent}." ,
+            timeout=2 
+            )
+        
+        elif percent == 100:
+            notification.notify( 
+            title = "Battery Reminder", 
+            message="Fully charged" , 
+            timeout=2 
+            )
+
+        
+
+
+mydb=mysql.connector.connect(host="localhost", user="root",passwd="root",charset="utf8")
+mycursor=mydb.cursor()
+mycursor.execute("create database if not exists covid_management")
+mycursor.execute("use covid_management")
+mycursor.execute("create table if not exists staff(sno varchar(25) not null,name varchar(25) not null, age varchar(25) not null, gender char(1) not null,post varchar(25) not null,salary varchar(25) not null)")
+mycursor.execute("create table if not exists patients(sno varchar(25) not null,name varchar(25) not null,age varchar(25) not null, gender varchar(25) not null, date date not null)")
+mycursor.execute("create table if not exists login(admin varchar(25) not null,password varchar(25) not null)")
+mycursor.execute("create table if not exists sno(patient varchar(25) not null,staff varchar(25) not null)")
+mycursor.execute("select * from sno")
+z=0
+for i in mycursor:
+    z=1
+if z==0:
+    mycursor.execute("insert into sno values('0','0')")
+mydb.commit()
+j=0
+mycursor.execute("select * from login")
+
+for i in mycursor:
+    j=1
+if(j==0):
+    mycursor.execute("insert into login values('Admin','paswrd')")
+    mydb.commit()
+loop1='y'
+while(loop1=='y' or loop1=='Y'):
+    print("_______________________")
+    print()
+    print("1. Admin")
+    print("2. Patient")
+    print("3. Latest update")
+    print("4. Covid Accerssories Mart")
+    print("5. Physical Testing Labs")
+    print("6. Chat Support ")
+    print("7. Our WEBSITE")
+    print("8. Exit")
+    print("_______________________")
+    print()
+    ch1=int(input("Enter your choice: "))
+    if(ch1==1):
+        #admin coded
+        print()
+        print("TWO-STEP VERIFICATION --> ")
+        print()
+        print("Step First")
+        pas=input("Enter your Password: ")
+        mycursor.execute("select * from login")
+        for i in mycursor:
+            username,password=i
+        if(pas !=password):
+            print("Step First --> fail ")
+            print()
+            print("---------------------------------------------------------")
+            print("ENTER CORRECT PASSWORD                    login failed!!")
+            print("---------------------------------------------------------")
+            print()
+            forgotpass = input("Forgot password ?? (y/n) : ")
+            if forgotpass == "y":
+                sql_select_Query = "select * from login"
+                mycursor.execute(sql_select_Query)
+                records = mycursor.fetchall()
+                for row in records:
+                    name = str(row[1])
+                    
+                print()    
+                print("This is a HINT to your password -- > ")
+                print()
+                print("**************************************")  
+                print("*   First Letter of Password is : ",name[0],"*")
+                print("*   Last  Letter of Password is : ",name[-1],"*")
+                print("**************************************")
+            elif forgotpass == "n":
+                pass
+        if(pas==password):
+            loop2='n'
+            print("Step First --> pass ")   
+            
+            import smtplib
+            import random
+            a = random.randint(0,10000)
+            c = str(a)
+            b = "NEW LOGIN \n\n your OTP is   -->  "+c 
+            sender_email = "covidmanagementsystembydevs@gmail.com"
+            rec_email = "nextlevel1234nextlevel@gmail.com"
+            subject = "pyhton"
+            password = "cmsbydev"
+                
+            server = smtplib.SMTP("smtp.gmail.com",587)
+            server.starttls()
+            server.login(sender_email, password)
+            print()
+            print("Step Two")
+            server.sendmail(sender_email, rec_email,b)
+            otp = int(input("Enter the OTP send on EDMIN email_id : "))    
+            
+            
+            
+            while(loop2=='n' or loop2=='N'):
+                if a != otp:
+                    print("STEP TWO --> fail")
+                    print()
+                    print("---------------------------------------------------------")
+                    print("ENTER CORRECT OTP                          login failed!!")
+                    print("---------------------------------------------------------")
+                    break
+                
+                if a == otp:
+                    print("STEP TWO --> pass")
+                    print()
+                    print("---------------------------------------------------------")
+                    print("login success")    
+                    print("---------------------------------------------------------")
+        
+                    #login update
+                    mydb = mysql.connector.connect(host="localhost",user="root",password="root", charset="utf8")
+                    mycursor = mydb.cursor()
+                    mycursor.execute("use covid_management")
+                    mycursor = mydb.cursor()
+                    sno = 1
+                    mycursor.execute("select * from logins")
+                    t = 0
+                    for i in mycursor:
+                        t+=1    
+                    mycursor.execute('insert into logins(sno, date ,time) values(%s, %s, %s)', (t , curdate1 , curtime1))
+
+
+
+                    mydb.commit()
+
+
+
+
+                    print("__________________________")
+                    print()
+                    print("1.Add patients")
+                    print("2.Add Staff")
+                    print("3.Display Patients Record")
+                    print("4.Display Staff Record")
+                    print("5.change password")
+                    print("6.Remove Patients")
+                    print("7.Remove Staff")
+                    print("8.Logout")
+                    print("__________________________")
+                    ch2=int(input("Enter your choice: "))
+                    if(ch2==1):
+                        loop3='y'
+                        while(loop3=='y' or loop3=='Y'):
+                            name=input("Enter patients name : ")
+                            age=input("Enter patients age : ")
+                            gender=input("Enter patients gender(m/f) : ")
+                            date=input("Enter date of conformation of covid : ")
+                            phone_no = input("Enter your Phone number : ")
+                            email = input("Enter your email id : ")
+                            your_choise = int(input("Quarantine 1. Hospital 2. self quarantine at home : "))
+                            your_choise1 = int(input("Room 1.General Ward 2. Semi-special Ward 3. Special Ward 4. Deluxe Ward 5. ICU - on doctor consult only : "))
+                            if your_choise ==1 :
+                                Quarantine = "hospital"
+                            elif your_choise ==2 :
+                                Quarantine = "home quarantine"
+                            if your_choise1 == 1:
+                                ward = "General Ward"
+                                total1= "70300"
+                                total2= "70,300"
+                            elif your_choise1 == 2:
+                                ward = "Semi-special Ward"
+                                total1 = "73100"
+                                total2 = "73,100"
+                            elif your_choise1 ==3:
+                                ward = "Special Ward"
+                                total1 = "78700"
+                                total2 = "78,700"
+                            elif your_choise1 ==4:
+                                ward = "Deluxe Ward"
+                                total1 = "84300"
+                                total2 = "84,300"
+                            elif your_choise1 == 5:
+                                ward = "ICU"
+                                total1 = "134700"
+                                total2 = "1,34,700"
+                            if len(phone_no) != 10:
+                                phone_no= input("Enter your correct Phone number : ")
+                            if len(phone_no) == 10:
+                                sender_email = "covidmanagementsystembydevs@gmail.com"
+                                subject = "pyhton"
+                                password = "cmsbydev"
+                                wordno = num2words(total1)
+                                wordno1 = str(wordno)
+                                b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for "+Quarantine +" and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total2 +" ( " +wordno1 +" )"
+                                server = smtplib.SMTP("smtp.gmail.com",587)
+                                server.starttls()
+                                server.login(sender_email, password)
+                                
+                                server.sendmail(sender_email, email,b)
+                                print("Emailhas been sent to ",email)
+
+                                
+                                mycursor.execute("select * from sno")
+                                for i in mycursor:
+                                    patient,staff=i
+                                    patient=int(patient)+1
+                            
+                                mycursor.execute("insert into patients values('"+str(patient)+"','"+name+"','"+age+"','"+gender+"','"+date+"','"+phone_no+"')")
+                            
+                                mycursor.execute("update sno set patient='"+str(patient)+"'")
+                                mydb.commit()
+                                print("data of Patient has been saved successfully...")
+                                mycursor.execute("select * from patients")
+                                t=0
+                                for i in mycursor:
+                                    t+=1
+                                    t_id1,name1,age1,gender1,date1,phone_no1=i
+                                print(f"Total number of Corona Infected patients--> {patient}")
+                                                        
+                                print(f"Active Corona Cases--> {t}")
+
+                                print(f"This patient with id {t_id1} will be in quarantine upto 14 days from {date1}")
+                                print("------------------------------------------------------")
+                                t_id2 = str(t_id1)
+                                import smtplib
+                            
+                                sender_email = "covidmanagementsystembydevs@gmail.com"
+                                rec_email = "nextlevel1234nextlevel@gmail.com"
+                                subject = "pyhton"
+                                password = "cmsbydev"
+                                b = " DATA MODIFY \nNew Patients added with id " +t_id2 +"\nName --> " +name +"\nAge --> " +age +"\nGender  --> " +gender +"\nDate --> " +date  +"\nPhone no --> " +phone_no  +"\nat " +curdate +"    "+curtime 
+
+                                server = smtplib.SMTP("smtp.gmail.com",587)
+                                server.starttls()
+                                server.login(sender_email, password)
+                                
+                                server.sendmail(sender_email, rec_email,b)
+                                print()
+                                print("update send on ADMIN email_id")
+                                loop3=input("Do You Want To Enter More Data Of More Patients(y/n): ")
+                    
+                        loop2=input("Do You Want To Logout(y/n): ")
+                        print("------------------------------------------------------")
+                    elif(ch2==2):
+                        loop3='y'
+                        while(loop3=='y' or loop3=='Y'):
+                            name=input("Enter New Staff Name: ")
+                            age=input("Enter Age: ")
+                            gender=input("Enter gender(m/f): ")
+                            post=input("Enter His/Her post: ")
+                            salary=input("Enter His/Her Salary(per month): ")
+                            
+                            mycursor.execute("select * from sno")
+                            for i in mycursor:
+                                patient,staff=i
+                                staff=int(staff)+1
+                                
+                            mycursor.execute("insert into staff values('"+str(staff)+"','"+name+"','"+age+"','"+gender+"','"+post+"','"+salary+"')")
+                            mycursor.execute("update sno set staff='"+str(staff)+"'")
+                            mydb.commit()
+                            print(f"staff with id {staff} has been saved successfully...")
+                            
+                            mycursor.execute("select * from staff")
+                            t=0
+                            for i in mycursor:
+                                t+=1
+                            staff1 = str(staff)
+                        
+                            print(f"Active Staff Members--> {t}")
+                            print()
+                            loop3=input("Do You Want To Enter More Staff Data(y/n) :")
+                            print()
+                            import smtplib
+                            
+                            sender_email = "covidmanagementsystembydevs@gmail.com"
+                            rec_email = "nextlevel1234nextlevel@gmail.com"
+                            subject = "pyhton"
+                            password = "cmsbydev"
+                            b = " DATA MODIFY \nNew staff added with id " +staff1 +"\nname --> " +name +"\nage --> " +age +"\ngender  --> " +gender +"\npost --> " +post  +"\nsalaray --> " +salary  +"\nat " +curdate +"    "+curtime 
+
+                            server = smtplib.SMTP("smtp.gmail.com",587)
+                            server.starttls()
+                            server.login(sender_email, password)
+                            
+                            server.sendmail(sender_email, rec_email,b)
+                            print()
+                            print("update send on ADMIN email_id")
+
+                            
+                            loop2=input("Do You Want To LogOut(y/n): ")
+                    elif(ch2==3):
+                        idd=input("Enter patient's ID: ")
+                        t_id2,name2,age2,gender2,date2,phone_no=["","","","","",""]
+                        mycursor.execute("select * from patients where sno='"+idd+"'")
+                        for i in mycursor:
+                            t_id2,name2,age2,gender2,date2,phone_no=i
+                        print("| ID | NAME | AGE | GENDER | CORONA POSITIVE DATE |PHONE_NO")
+                        print(f"| {t_id2} | {name2} | {age2} | {gender2} | {date2} | {phone_no} ")
+                        idd1 = str(idd)
+                        import smtplib
+                        b = " DATA VIEWED \nData viewed of patient id " +idd1 +"\nname --> " +name2  +"\nat " +curdate +"    "+curtime     
+                        sender_email = "covidmanagementsystembydevs@gmail.com"
+                        rec_email = "nextlevel1234nextlevel@gmail.com"
+                        subject = "pyhton"
+                        password = "cmsbydev"
+                        
+                        server = smtplib.SMTP("smtp.gmail.com",587)
+                        server.starttls()
+                        server.login(sender_email, password)
+                            
+                        server.sendmail(sender_email, rec_email,b)
+                        print()
+                        print("update send on ADMIN email_id")
+                    elif(ch2==4):
+                        idd=input("Enter Staff ID: ")
+                        t_id3,name3,age3,gender3,past3,salary3=["","","","","",""]
+                        mydb.commit()
+                        mycursor.execute("select * from staff where sno='"+idd+"'")
+                        for i in mycursor:
+                            t_id3,name3,age3,gender3,past3,salary3=i
+                        print("| ID | NAME | AGE | GENDER | POST | SALARY |")
+                        print(f"| {t_id3} | {name3} | {age3} | {gender3} | {past3} | {salary3} |")
+                        idd1 = str(idd)
+                        import smtplib
+                        b = " DATA VIEWED \nData viewed of staff id " +idd1 +"\nname --> " +name3  +"\nat " +curdate +"    "+curtime     
+                        sender_email = "covidmanagementsystembydevs@gmail.com"
+                        rec_email = "nextlevel1234nextlevel@gmail.com"
+                        subject = "pyhton"
+                        password = "cmsbydev"
+                        
+                        server = smtplib.SMTP("smtp.gmail.com",587)
+                        server.starttls()
+                        server.login(sender_email, password)
+                            
+                        server.sendmail(sender_email, rec_email,b)
+                        print()
+                        print("update send on ADMIN email_id")
+                    elif(ch2==5):
+                        print()
+                        pas=input("Enter Old Password : ")
+                        mycursor.execute("select * from login")
+                        for i in mycursor:
+                            username,password=i
+                        if(pas==password):
+                            npas=input("Enter New Password : ")
+                            mycursor.execute("update login set password='"+npas+"'")
+                            mydb.commit()
+                            import smtplib
+                            
+                            sender_email = "covidmanagementsystembydevs@gmail.com"
+                            rec_email = "nextlevel1234nextlevel@gmail.com"
+                            subject = "pyhton"
+                            password = "cmsbydev"
+                            b = " SECURITY ALERT\nPassword of covid management system (admin section) got changed\nfrom --> " + pas +"\nto --> " +npas + "\nat " +curdate +"    "+curtime  
+
+                            server = smtplib.SMTP("smtp.gmail.com",587)
+                            server.starttls()
+                            server.login(sender_email, password)
+                            
+                            server.sendmail(sender_email, rec_email,b)
+                            print()
+                            print("update send on ADMIN email_id")
+                        else:
+                            print("Wrong Password...")
+                    elif(ch2==6):
+                        loop3='y'
+                        while(loop3=='y' or loop3=='Y'):
+                            idd=input("Enter Patient ID : ")
+                            mycursor.execute("delete from patients where sno='"+idd+"'")
+                            mydb.commit()
+                            print("Patient has been removed successfully")
+                            loop3=input("Do You Want To Remove More Patients(y/n): ")
+                            import smtplib
+                            
+                            sender_email = "covidmanagementsystembydevs@gmail.com"
+                            rec_email = "nextlevel1234nextlevel@gmail.com"
+                            subject = "pyhton"
+                            password = "cmsbydev"
+                            b = " DATA MODIFY \nDATA OF PATIENT ID " +idd +" has been removed"  +"\nat " +curdate +"    "+curtime 
+
+                            server = smtplib.SMTP("smtp.gmail.com",587)
+                            server.starttls()
+                            server.login(sender_email, password)
+                            
+                            server.sendmail(sender_email, rec_email,b)
+                            print()
+                            print("update send on ADMIN email_id")
+                        
+                    elif(ch2==7):
+                        loop3='y'
+                        while(loop3=='y' or loop3=='Y'):
+                            idd=input("Enter Staff ID : ")
+                            mycursor.execute("delete from Staff where sno='"+idd+"'")
+                            mydb.commit()
+                            print("Staff has been removed successfully")
+                            loop3=input("Do You Want To Remove More Staff(y/n): ")
+                            import smtplib
+                            
+                            sender_email = "covidmanagementsystembydevs@gmail.com"
+                            rec_email = "nextlevel1234nextlevel@gmail.com"
+                            subject = "pyhton"
+                            password = "cmsbydev"
+                            b = " SECURITY ALERT \nDATA OF STAFF ID " +idd +" has been removed"  +"\nat " +curdate +"    "+curtime 
+
+                            server = smtplib.SMTP("smtp.gmail.com",587)
+                            server.starttls()
+                            server.login(sender_email, password)
+                            
+                            server.sendmail(sender_email, rec_email,b)
+                            print()
+                            print("update send on ADMIN email_id")
+                    elif(ch2==8):
+
+                        break
+                    break
+      
+    elif(ch1==2):
+        #covid test code
+        print("Thank You for coming forward for your test...")
+        icough=input("Are you feeling cough?(y/n): ").lower()
+        dry_cough='n'
+        cough='n'
+        if(icough=='y' or icough=='Y'):
+            dry_cough=input("Are you feeling dry cough(y/n): ").lower()
+            cough=input("Are you feeling normal cough(y/n): ").lower()
+            
+        sneeze=input("Are You feeling Sneeze?(y/n): ").lower()
+        pain=input("Are You feeling pain in your body?(y/n): ").lower()
+        weakness=input("Are You feeling weakness?(y/n): ").lower()
+        mucus=input("Are You feeling any mucus?(y/n):  ").lower()
+        itemp=int(input("please Enter your temprature: "))
+        if(itemp<=100):
+            temp='low'
+        else:
+            temp='high'
+        breath=input("Are you having difficulty in breathing?(y/n): ").lower()
+        if(dry_cough=='y' and sneeze=='y' and pain=='y' and weakness=='y' and temp=='high' and breath=='y'):
+            print("//////////////////////////////////////////////////////////////////////////////////////////")
+            print()
+            print("Sorry To Say But According to symptoms you are having you are suffering from Corona.......")
+            print()
+            print("//////////////////////////////////////////////////////////////////////////////////////////")
+            name=input("Enter your name: ")
+            age=input("Enter your age: ")
+            gender=input("Enter your gender(m/f): ")
+            phone_no=input("Enter the phone no. : ")
+            email_id = input("Enter the email : ")
+            mycursor.execute("select * from sno")
+            for i in mycursor:
+                patient,staff=i
+                patient=int(patient)+1
+            mycursor.execute("insert into patients values('"+str(patient)+"','"+name+"','"+age+"','"+gender+"',now(),'"+phone_no+"')")
+            mycursor.execute("update sno set patient='"+str(patient)+"'")
+            mydb.commit()
+            print("------------------------------------------------------")
+            print("data of Patient has been saved successfully...")
+            print("------------------------------------------------------")
+            print(f"Total number of Corona Infected patients--> {patient}")
+            mycursor.execute("select * from patients")
+            t=0
+            for i in mycursor:
+                t+=1
+                
+            print(f"Active Corona Cases--> {t}")
+            mycursor.execute("select * from patients")
+            for i in mycursor:
+                t_id5,name5,age5,gender5,date5,phone_no5=i
+            print(f"This patient with id {t_id5} will be in quarantine upto 14 days from {date5}")
+            print("_______________________________")
+            print("now, do u want to quarantine at")
+            print("1. Hospital")
+            print("2. self quarantine at home")
+            print("_______________________________")
+            print()
+            your_choise = int(input("enter your choise :"))
+            if your_choise == 1:
+                quarantine = "Hospital quarantine"
+                print("for getting quarantine at hospital. These are the types of wards you can choose")
+                print("1. General Ward      | rs400/day")
+                print("2. Semi-special Ward | rs 600/day")
+                print("3. Special Ward      | rs 1000/day")
+                print("4. Deluxe Ward       | rs 1400/day")
+                print("5. ICU (on doctor consult only)")
+                wardchoise = int(input("enter the type of ward u want to choose :"))
+                                
+                if wardchoise == 1:
+                    ward = "GENERAL WARD"
+                    rate = "400"
+                    total = 5600
+                    total1= "70,300"
+                    print("thank you for choosing General Ward | rs400/day ")
+                    print("further details will be sent on your registered email id.(",email_id,")")
+                    import smtplib
+                    b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for hospital Quarantine and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total1
+                    sender_email = "covidmanagementsystembydevs@gmail.com"
+                    
+                    subject = "pyhton"
+                    password = "cmsbydev"
+
+                    server = smtplib.SMTP("smtp.gmail.com",587)
+                    server.starttls()
+                    server.login(sender_email, password)
+                    print("loginsucess")
+                    server.sendmail(sender_email, email_id,b)
+                    print("Emailhas been sent to ",email_id)
+                elif wardchoise == 2:
+                    ward = "SEMI-SPEACIAL WARD"
+                    rate = "600"
+                    total = 8400
+                    total1 = "73,100"
+                    
+                    print("thank you for choosing Semi-special Ward | rs 600/day ")
+                    print("further details will be sent on your registered email id.(",email_id,")")
+                    import smtplib
+                    b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for hospital Quarantine and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total1
+                    sender_email = "covidmanagementsystembydevs@gmail.com"
+                    
+                    subject = "pyhton"
+                    password = "cmsbydev"
+
+                    server = smtplib.SMTP("smtp.gmail.com",587)
+                    server.starttls()
+                    server.login(sender_email, password)
+                    print("loginsucess")
+                    server.sendmail(sender_email, email_id,b)
+                    print("Emailhas been sent to ",email_id)
+                elif wardchoise == 3:
+                    ward = "SPEACIAL WARD"
+                    rate = "1000"
+                    total = 14000
+                    total1 = "78,700"
+                    print("thank you for choosing Special Ward | rs 1000/day ")
+                    print("further details will be sent on your registered email id.(",email_id,")")
+                    import smtplib
+                    b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for hospital Quarantine and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total1
+                    sender_email = "covidmanagementsystembydevs@gmail.com"
+                    
+                    subject = "pyhton"
+                    password = "cmsbydev"
+
+                    server = smtplib.SMTP("smtp.gmail.com",587)
+                    server.starttls()
+                    server.login(sender_email, password)
+                    print("loginsucess")
+                    server.sendmail(sender_email, email_id,b)
+                    print("Emailhas been sent to ",email_id)
+                elif wardchoise == 4:
+                    ward = "DELUX WARD"
+                    rate = "1400"
+                    total = 19600
+                    total1 = "84,300"
+                   
+                    print("thank you for choosing Special Ward | rs 1000/day ")
+                    print("further details will be sent on your registered email id.(",email_id,")")
+                    import smtplib
+                    b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for hospital Quarantine and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total1
+                    sender_email = "covidmanagementsystembydevs@gmail.com"
+                    
+                    subject = "pyhton"
+                    password = "cmsbydev"
+
+                    server = smtplib.SMTP("smtp.gmail.com",587)
+                    server.starttls()
+                    server.login(sender_email, password)
+                    print("loginsucess")
+                    server.sendmail(sender_email, email_id,b)
+                    print("Emailhas been sent to ",email_id)
+                elif wardchoise == 5:
+                    ward = "ICU"
+                    rate = "5000"
+                    total = 105000
+                    total1 = "1,34,700"
+                
+                    
+                    print("further details will be sent on your registered email id.(",email_id,")")
+                    import smtplib
+                    b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for hospital Quarantine and for room you have opted for - "+ward +" \n\n your total bill amount to be paid is rs "+total1
+                    sender_email = "covidmanagementsystembydevs@gmail.com"
+                    
+                    subject = "pyhton"
+                    password = "cmsbydev"
+
+                    server = smtplib.SMTP("smtp.gmail.com",587)
+                    server.starttls()
+                    server.login(sender_email, password)
+                    print("loginsucess")
+                    server.sendmail(sender_email, email_id,b)
+                    print("Emailhas been sent to ",email_id)
+                    icu = input("--> do you want to conform ICU (on doctor consult only)|(y/n): ")
+                    if icu == "y":
+                        print("get well soon")
+                        print("further details will be sent on your registered phone no.(",phone_no,")")
+                    elif icu =="n":
+                        print("=-=-=-=-=-=")
+                
+
+                billinput = input("do u want a copy of a bill (y/n):")
+
+                if billinput == "y":
+                    #BILL CODE
+                    import datetime
+                    import random
+                    now = datetime.datetime.now()
+
+                    print("----------------------------")    
+
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    print("!                                                                          !")
+                    print("!                       Welcome to Billing Department                      !")
+                    print("!                                                                          !")
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    bc =1 
+                    if bc ==1:
+    
+                        random_no = random.randint(0,10000)
+                        a =[]
+                        for r in mycursor:
+                          a = r
+                          s = 0
+                          print()
+                          print("-----------------------------------------")
+                          for i in a :
+          
+                              if s == 0:
+                                  print("Patients id     |",i)
+                              elif s == 1:
+                                  print("Name            |",name)
+                              elif s == 2:
+                                  print("Age             |",age)
+                              elif s == 3:
+                                  print("Gender          |",gender)
+                              elif s == 4:
+                                  print("Date            |")        
+                              s += 1
+                        #mycursor.execute("select room from bill where sno='"+c+"'")
+                        #for b in mycursor:
+                        #    j = b
+                        #mycursor.execute("select rate from bill where sno='"+c+"'")
+                        #for b1 in mycursor:
+                        #    j1 = b1
+                        #mycursor.execute("select total from bill where sno='"+c+"'")
+                        #for b2 in mycursor:
+                        #    j2 = b2    
+                        print("SOURCE             | casuality")
+                        print("STATUS             | alive")
+                        print("PANEL              | covid 19 govenment(00)")
+                        print("BILL NO            |",random_no)
+                        print("BILL DATE          |" ,now.strftime("%Y-%m-%d "))
+                        print("BILL TIME          |" ,now.strftime("%H:%M:%S"))
+                        print("TYPE OF QUARANTINE |",quarantine)
+                        print("ROOM CATEGORY   |",ward)
+                        
+                        print("-----------------------------------------")
+                        print()
+                        print("____________________________________________________________________________")
+                        print(" sno |           DESCRIPTIONS             | QTY |   RATE   |    AMOUNT     |")         
+                        print("____________________________________________________________________________")
+                        print("1.   | LAbORATORY SERVICES                |  -  |    -     |   14000/-     |")
+                        print("2.   | MEDICINE                           |  -  |    -     |    5000/-     |")
+                        print("3.   | OXYGEN CYLINER                     |  2  |   900    |    1800/-     |")
+                        print("4.   | PPE kit                            | 14  |   2000   |   28000/-     |")
+                        print("5.   | SANITIZERS                         |  5  |   100    |     500/-     |")
+                        if ward == "GENERAL WARD":
+                            print("6.   |",ward,"                      | 14  |   ",rate,"  |     ",total,"    |")
+                        elif ward == "SEMI-SPEACIAL WARD":
+                            print("6.   |",ward,"                | 14  |   ",rate,"  |     ",total,"    |")
+                        elif ward == "SPEACIAL WARD":
+                            print("6.   |",ward,"                     | 14  |   ",rate,"  |     ",total,"   |")
+                        elif ward == "DELUX WARD":
+                            print("6.   |",ward,"                        | 14  |   ",rate,"  |     ",total,"   |")
+                        elif ward == "ICU":
+                            print("6.   |",ward,"                               | 14  |   ",rate,"  |     ",total,"    |")
+                        print("7.   | ECHO                               |  -  |    -     |    4000/-     |")
+                        print("8.   | CT SCAN                            |  2  |   2500   |    5000/-     |")
+                        print("9.   | CONSULTANT                         |  7  |   200    |    1400/-     |")
+                        print("10.  | CARDIAC MONITOR CHARGES            |  -  |    -     |    5000/-     |")
+                        print("____________________________________________________________________________")
+                        print("                        TOTAL AMOUNT      | ",total1,"                ")
+                        print("____________________________________________________________________________")
+                        print("____________________________________________________________________________")
+                        print("           ADDRESS - 1234 ,RING ROAD JAIPUR(12432) RAJASTHAN                ")
+                        print()
+                        print("For More Details -         +91 14 244530,+91 6546636364                     ")
+
+                        print("                        covidmanagementsystembydevs@gmail.com               ")
+                        print("____________________________________________________________________________")
+                        print()
+                        print("------------------------------THANKS FOR VISIT------------------------------")
+                    
+            elif your_choise == 2:
+                quarantine = "home quartine"
+                print("thanks for choosing self home quarantine")
+                print("During your quarintine you should:")
+                print("-> Stay home unless you absolutely must leave, such as for essential medical appointments")
+                print("-> Separate yourself from other household members and pets")
+                print("-> Use a separate bedroom and bathroom if possible")
+                print("-> Not share utensils, dishes, cups/glasses, bedding, towels, and other personal items")
+                print("-> Wear a mask if you can't separate yourself")
+                print()
+                print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+                print("In any emegency call CORONA ( COVID 19 ) HELPLINE :  011-23978046 OR 1075")
+                print("for any help or in any emergency Helpline Number for corona-virus ")
+                print("Toll Free No: 104/108 National Call Center No +91-11-23978046 Toll Free No: 1075")
+                print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+                print()
+                print("further details will be sent on your registered email id.(",email_id,")")
+                import smtplib
+                b = " Thanks you for using COVID MANAGEMENT SYSTEM made by - DEV SHARMA.\n\n according to symptoms and covid test you are COVID POSITIVE \n\n since, you are COVID POSITIVE you have to get Quarantine and you have opted for Home Quarantine \n\n your total bill amount to be paid is rs 29,400 \n\n\n Here are some precautions to be taken during HOME Quarantine \n -> Stay home unless you absolutely must leave, such as for essential medical appointments \n -> Separate yourself from other household members and pets \n. -> Use a separate bedroom and bathroom if possible \n -> Not share utensils, dishes, cups/glasses, bedding, towels, and other personal items \n -> Wear a mask if you can't separate yourself \n In any emegency call CORONA ( COVID 19 ) HELPLINE :  011-23978046 OR 1075 \n for any help or in any emergency Helpline Number for corona-virus \n Toll Free No: 104/108 National Call Center No +91-11-23978046 Toll Free No: 1075 \n       "
+                sender_email = "covidmanagementsystembydevs@gmail.com"
+                
+                subject = "pyhton"
+                password = "cmsbydev"
+
+                server = smtplib.SMTP("smtp.gmail.com",587)
+                server.starttls()
+                server.login(sender_email, password)
+                print("loginsucess")
+                server.sendmail(sender_email, email_id,b)
+                print()
+                print("Email has been sent to ",email_id)
+                print()
+                billinput = input("do u want a copy of a bill (y/n):")
+                if billinput == "y":
+                    #BILL CODE
+                    import datetime
+                    import random
+                    now = datetime.datetime.now()
+
+                    print("----------------------------")    
+
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    print("!                                                                          !")
+                    print("!                       Welcome to Billing Department                      !")
+                    print("!                                                                          !")
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    bc =1 
+                    if bc ==1:
+    
+                        random_no = random.randint(0,10000)
+                        a =[]
+                        for r in mycursor:
+                          a = r
+                          s = 0
+                          print()
+                          print("-----------------------------------------")
+                          for i in a :
+          
+                              if s == 0:
+                                  print("Patients id     |",i)
+                              elif s == 1:
+                                  print("Name            |",name)
+                              elif s == 2:
+                                  print("Age             |",age)
+                              elif s == 3:
+                                  print("Gender          |",gender)
+                              elif s == 4:
+                                  print("Date            |")        
+                              s += 1
+                        #mycursor.execute("select room from bill where sno='"+c+"'")
+                        #for b in mycursor:
+                        #    j = b
+                        #mycursor.execute("select rate from bill where sno='"+c+"'")
+                        #for b1 in mycursor:
+                        #    j1 = b1
+                        #mycursor.execute("select total from bill where sno='"+c+"'")
+                        #for b2 in mycursor:
+                        #    j2 = b2    
+                        print("SOURCE            | casuality")
+                        print("STATUS            | alive")
+                        print("PANEL             | covid 19 govenment(00)")
+                        print("BILL NO           |",random_no)
+                        print("BILL DATE         |" ,now.strftime("%Y-%m-%d "))
+                        print("BILL TIME         |" ,now.strftime("%H:%M:%S"))
+                        print("TYPE OF QUARNTINE |",quarantine)
+                        print("-----------------------------------------")
+                        print()
+                        print("____________________________________________________________________________")
+                        print(" sno |           DESCRIPTIONS             | QTY |   RATE   |    AMOUNT     |")         
+                        print("____________________________________________________________________________")
+                        print("1.   | LAbORATORY SERVICES                |  -  |    -     |   14000/-     |")
+                        print("2.   | MEDICINE                           |  -  |    -     |    5000/-     |")
+                        print("3.   | ECHO                               |  -  |    -     |    4000/-     |")
+                        print("4.   | CT SCAN                            |  2  |   2500   |    5000/-     |")
+                        print("5.   | CONSULTANT                         |  7  |   200    |    1400/-     |")
+                        print("____________________________________________________________________________")
+                        print("                        TOTAL AMOUNT      |            29,400               ")
+                        print("____________________________________________________________________________")
+                        print("____________________________________________________________________________")
+                        print("           ADDRESS - 1234 ,RING ROAD JAIPUR(12432) RAJASTHAN                ")
+                        print()
+                        print("For More Details -         +91 14 244530,+91 6546636364                     ")
+
+                        print("                           covid_management@devsharmaproject.com            ")
+                        print("____________________________________________________________________________")
+                        print()
+                        print("------------------------------THANKS FOR VISIT------------------------------")
+                
+                else:
+                    print("!!enter option did not match pls re-enter your choise!!")
+                    print()
+
+                        
+        elif(dry_cough=='y' and sneeze=='y' and pain=='n' and weakness=='n' and temp=='low' and breath=='n'):
+            print("Nothing To worry, its just due to Air Pollution...")
+            
+        elif(cough=='y' and mucus=='y' and sneeze=='y' and pain=='n' and weakness=='n' and temp=='low' and breath=='n'):
+            print("nothing to worry, its just Common Cold...")
+        else:
+            print("You are not corona infected, if u are feeling somwething wrong, you just need to rest... ")
+            print("If then also you can't feel better,please consult to your doctor.")
+    elif(ch1==3):
+        #covid live
+        print("1. Covid Live Count ")
+        print("2. Covid Count Graph ")
+        print("3. Covid live graph of each country")
+        print("4. Covid live active patients on India map")
+        cc = int(input("your choise :"))
+        if cc == 1:
+            from covid import Covid
+            import pandas as pd
+            covid = Covid()
+            total_active =  covid.get_total_active_cases()
+            confirmed = covid.get_total_confirmed_cases()
+            recovered = covid.get_total_recovered()
+            deaths = covid.get_total_deaths()
+            print()
+            print("This is the latest live counts")                        
+            print()
+            from tabulate import tabulate
+            print (tabulate([["total_active", total_active], ["Total Confirmed", confirmed],["Total Recovered", recovered],
+            ["Total Deaths",deaths]], ["PARAMETERS", "COUNT"], tablefmt="grid"))
+        elif cc ==2:
+            import os 
+            import numpy as np 
+            import matplotlib.pyplot as plt 
+            from covid import Covid
+            import pandas as pd
+            import matplotlib.pyplot as plt
+            covid = Covid()
+            total_active =  covid.get_total_active_cases()
+            confirmed = covid.get_total_confirmed_cases()
+            recovered = covid.get_total_recovered()
+            deaths = covid.get_total_deaths()
+            print()
+            print("This is the Latest Live counts in BAR GRAPH form 🠗")                               
+            print()
+            data = [total_active,confirmed,recovered,deaths]
+            data1 = ["total_active","confirmed","recovered","deaths"]
+
+
+            fig, ax = plt.subplots() 
+            width = 0.75
+            ind = np.arange(len(data)) 
+
+            ax.barh(ind, data, width, color = "blue") 
+
+            for i, v in enumerate(data): 
+                ax.text(v + 3, i + .25, str(v), 
+                    color = 'red', fontweight = 'bold') 
+
+            plt.title("COVID COUNT GRAPH")
+            plt.barh(data1,data)
+            plt.xlabel("Counts ➪")
+            plt.ylabel("Parameters ➪")
+            plt.show() 
+    
+        elif cc == 3:
+            import webbrowser
+            webbrowser.open('https://app.flourish.studio/visualisation/1571387', new=1)
+        elif cc == 4:
+            import webbrowser
+            webbrowser.open('https://bing.com/covid/local/jaipur_rajasthan_india', new=2)
+        
+    elif (ch1==4):
+        #COVID ACCESSORIES MART CODE
+        from PIL import Image
+        import webbrowser
+        print("___________________________________________________________________________________________________")
+        print("------------------------------   WELCOME TO COVID ACCESSORIES MART   ------------------------------")
+        print("___________________________________________________________________________________________________")      
+        loop1='y'
+        while(loop1=='y' or loop1=='Y'):
+            print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
+            print("1. N95 MASK                                                                    | ₹ 315 - 5 piece   |")
+            print("2. USE & throw MASK                                                            | ₹ 99  - 100 piece |")
+            print("3. COTTEN MASK                                                                 | ₹ 499 - 5 piece   |")
+            print("4. Prifix ppe kit medical Personal Protective Equipment kit - PPE kit (white)  | ₹ 280 - 1 piece   |")
+            print("5. Kalor Free Size Personal Protection Kit for Travel - PPE kit (blue)         | ₹ 169 - 1 piece   |")
+            print("6. PET / OHP Sheet For Face Shield Mask                                        | ₹ 52  - 1 piece   |")
+            print("7. Himalaya PureHands - Orange Hand Sanitizer Bottle  (0.5 L)                  | ₹ 199 - 1 piece   |")
+            print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
+            print("8. LOGOUT                                                                                          ")     
+            print("___________________________________________________________________________________________________")
+            ur_choise = int(input("Enter your choise : "))
+            print("___________________________________________________________________________________________________")
+            if ur_choise == 1:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\n95.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/Juniper-Blacks-N95-9050-Respiratory/dp/B08LVZXJCX/ref=sr_1_20?dchild=1&keywords=n95&qid=1615017263&sr=8-20', new=1)
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 2:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\use & throw mask.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/SHAGUNGOLD-Shagun-Surgical-Disposable-Standard/dp/B08CV8QSD8/ref=sr_1_12?dchild=1&keywords=use+and+throw+mask&qid=1615017756&sr=8-12', new=1)
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 3:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\cotton mask.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/OxiClear-Handloom-Pollution-Washable-Reusable/dp/B08X76S23L/ref=sr_1_2_sspa?crid=1DP5BBZWQ5R69&dchild=1&keywords=use+and+throw+mask&qid=1615017518&sprefix=use+%2Caps%2C381&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyRjRNQlhIMkVSQzVKJmVuY3J5cHRlZElkPUEwMzE4NTU2MkhXVUhSSUFNN0ZWTiZlbmNyeXB0ZWRBZElkPUEwMDYwODU4SDc3RzBROURUMDA5JndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==', new=1)
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 4:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\white ppe.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/Prifix-medical-Personal-Protective-Equipment/dp/B08865K2LR/ref=sr_1_2?dchild=1&keywords=Prifix+ppe+kit+medical+Personal+Protective+Equipment+kit+-+PPE+kit+%28white%29&qid=1618636340&sr=8-2', new=1)        
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 5:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\blue ppe.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/Adrian-Disposable-Coverall-Polypropylene-Spunbond/dp/B0886BBT4C/ref=pd_lpo_263_t_2/257-9697249-3356722?_encoding=UTF8&pd_rd_i=B0886BBT4C&pd_rd_r=d72a2944-27fd-42b6-b4b1-206bce6e0ef3&pd_rd_w=uyE3W&pd_rd_wg=nQb7N&pf_rd_p=e38c5910-5c68-4d3b-b9d8-5cf7562f93aa&pf_rd_r=WGF15WNP3Q5H29K551Y2&psc=1&refRID=WGF15WNP3Q5H29K551Y2', new=1)        
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 6:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\cms\face sheild.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.amazon.in/ORILEY-Disposable-Adjustable-Anti-Splash-Transparent/dp/B089RWQ4FV/ref=sr_1_5?dchild=1&keywords=face+shield&qid=1615018075&sr=8-5', new=1)        
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 7:
+                print("1. PHOTO")
+                print("2. BUY")
+                print("3. BACK")
+                print("___________________________________________________________________________________________________")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 == 1:
+                    im = Image.open(r"D:\\cms\\sanitizer.png")
+                    im.show()
+                elif ur_choise1 == 2:
+                    webbrowser.open('https://www.flipkart.com/himalaya-purehands-orange-hand-sanitizer-bottle/p/itmee8840cb6a7c9?pid=HWSF5DG4ZUZG9ZAJ&lid=LSTHWSF5DG4ZUZG9ZAJFCN9A6&marketplace=FLIPKART&spotlightTagId=BestvalueId_g9b%2Fema%2Frhm%2Fjrn&srno=b_1_8&otracker=browse&fm=organic&iid=8a43f8dd-8311-433c-91f5-052ba5951aee.HWSF5DG4ZUZG9ZAJ.SEARCH&ppt=dynamic&ppn=productListView&ssid=znvlqe1e800000001615020809263', new=1)        
+                elif ur_choise1 == 3:
+                    continue
+            elif ur_choise == 8:
+                print("1. CONFIRM LOGOUT ")
+                print("2. BACK")
+                ur_choise1 = int(input("Enter your choise : "))
+                if ur_choise1 ==1:
+                    print("***************************************** Have a great day ****************************************")
+                    break
+                elif ur_choise1 ==2:
+                    continue
+        
+    elif(ch1==5):
+        import webbrowser
+        webbrowser.open_new(r'C:\Users\devsh\Downloads\COVID_Testing_Labs.pdf')
+
+    
+    elif(ch1==6):
+        import webbrowser
+        webbrowser.open("https://nextlevel1234nextl.wixsite.com/covidmanagementsyste/contact")
+        
+    elif(ch1==7):
+        import webbrowser
+        webbrowser.open("https://nextlevel1234nextl.wixsite.com/covidmanagementsyste")    
+
+    elif(ch1==8):
+        print()
+        
+        print("***************************** Have a great day *****************************")
+        break        

@@ -1,0 +1,6 @@
+#This is a Factorial Printer Program MAde By Python
+n = int(input("Enter the Number :- "))
+a = 1
+for i in range(1,n+1,1):
+    a = i*a
+print(f"Factorial of {n} is :- {a}")
