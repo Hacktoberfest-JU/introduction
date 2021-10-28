@@ -1,0 +1,10 @@
+import numpy as np
+import matplotlib.pyplot as plt
+col=[8000,6700,7800,9800,10900]
+sect=['A','B','C','D','E']
+colr=['r','g','y','b','m']
+expl=[0.1,0.1,0.2,0.1,0.1]
+plt.title("Title of the graph")
+plt.pie(col,labels=sect,autopct="%2.2f%%",colors=colr,explode=expl)
+plt.savefig("C:\\Users\\divyanshi\\Desktop\\piechart.png")
+plt.show()
