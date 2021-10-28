@@ -1,0 +1,5 @@
+# MY NAME IS RASHI KHANNA
+# THIS CODE PRINT THE TABLE OF 5
+
+for i in range(1,11)
+print(i*5)
