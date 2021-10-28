@@ -1,0 +1,21 @@
+import pandas as pd
+d1 = { 'p1': {'1':19, '2': 18, '3': 970, '4': 900},\
+ 'Quarter':{'1': 15, '2': 10, '3': 14, '4': 13}}
+ontutD= { 'Tutor' : [ 'Tahira', 'Gurjyot', 'Anusha', 'Jacob', 'Venkat',
+'Tahira', 'Gurjyot', 'Anusha', 'Jacob', 'Venkat',
+'Tahira','Gurjyot', 'Anusha', 'Jacob', 'Venkat',
+'Tahira', 'Gurjyot', 'Anusha', 'Jacob', 'Venkat' ],
+ 
+"Classes": [28, 36, 41, 32, 40, 36, 40, 36, 40, 46, 24, 30, 44, 40, 32, 36, 32
+, 36, 42, 38 ],
+"Quarter": [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4],
+"Country":[ 'USA', 'UK', 'Japan', 'USA' , 'Brazil', 'USA', 'USA', 'Japan',
+'Brazil', 'USA', 'Brazil', 'USA', 'UK', 'Brazil', 'USA', 'Japan',
+'Japan', 'Brazil ', 'UK', 'USA']
+ }
+df1= pd.DataFrame (ontutD)
+df2=pd.DataFrame(d1)
+df1
+df1.pivot_table(index="Country", values ="Classes", aggfunc='sum' )
+sdf=pd.concat([df1,df2])
+df2.join(df1,on='p1',lsuffix='_sdk',rsuffix='_csdk',h)
