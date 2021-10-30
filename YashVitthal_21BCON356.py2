@@ -1,8 +1,0 @@
-def sum(1,n):
-    if n==0:
-          return1[0]
-    else:
-          return1[n]+sum(1,n-1)
-list1=[10,20,30,40,50]
-size=len(list1)
-print("Sum=",sum(list1,size-1))
